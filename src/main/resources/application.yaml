@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: mob-rti-performance
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  datasource:
+    url: "jdbc:postgresql://dpg-cmrcu86n7f5s738j56c0-a.oregon-postgres.render.com:5432/rtiperformance"
+    username: "admin"
+    password: "r0vCwLlXHj1PFOKkEwYzrjkAIaYOssV5"
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    schema: leadmanager
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate # (create, create-drop, validate, update)
+logging:
+  level:
+    root: INFO
+management:
+  security:
+    enabled: false
+  endpoint:
+    metrics:
+      enabled: true
+    health:
+      show-details: always
+      group:
+        liveness:
+          include: ping
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    git:
+      mode: full
+    defaults:
+      enabled: true
+  metrics:
+    tags:
+      env: ${spring.profiles.active}
+      application: ${spring.application.name}
